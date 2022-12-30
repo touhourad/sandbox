@@ -21,13 +21,16 @@ jobs:
           UPSTREAM_REPO=$(jq -r '.parent.full_name' <<< ${API_DATA})
           # git config user.name "${GITHUB_ACTOR}"
           # git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com";
-          git config --local user.name  "GitHub Actions";
-          git remote add upstream https://github.com/${UPSTREAM_REPO}.git
-          git fetch upstream
-          git merge upstream/$(git branch --show-current) --allow-unrelated-histories
-          git push -f
-          git push --tag -f
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name  "GitHub Actions"
+          git config fetch.prune true
+          git config fetch.pruneTags true
+          gh repo sync ${GITHUB_REPOSITORY} --source ${UPSTREAM_REPO}
+          # git remote add upstream https://github.com/${UPSTREAM_REPO}.git
+          # git fetch upstream
+          # git merge upstream/$(git branch --show-current) --allow-unrelated-histories
+          # git push -f
+          # git push --tag -f
 
       # - uses: imba-tjd/rebase-upstream-action@master
       #   with:
