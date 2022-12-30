@@ -1,0 +1,31 @@
+name: Sync
+
+on:
+  push:
+
+  workflow_dispatch:
+
+jobs:
+  Sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+            
+      # - name: Sync upstream changes
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: |
+      #     # API_DATA=$(curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/${GITHUB_REPOSITORY})
+      #     API_DATA=$(gh api repos/${GITHUB_REPOSITORY})
+      #     UPSTREAM_REPO=$(jq -r '.parent.full_name' <<< ${API_DATA})
+      #     git config user.name "${GITHUB_ACTOR}"
+      #     git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+      #     git remote add upstream https://github.com/${UPSTREAM_REPO}.git
+      #     git fetch upstream --prune --prune-tags
+      #     git merge upstream/$(git branch --show-current) --allow-unrelated-histories
+      #     git push
+      #     git push --tag
+      - uses: imba-tjd/rebase-upstream-action@master
+        with:
+          branch: $(git branch --show-current)
