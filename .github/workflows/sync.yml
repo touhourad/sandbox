@@ -31,11 +31,11 @@ jobs:
       #   with:
       #     branch: $(git branch --show-current)
 
+      - run: echo ${GITHUB_REF_NAME}
+
       - name: Sync upstream changes
         id: sync
         uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
-        env:
-          test: ${GITHUB_REF_NAME}
         with:
           target_sync_branch: ${GITHUB_REF_NAME}
           # REQUIRED 'target_repo_token' exactly like this!
