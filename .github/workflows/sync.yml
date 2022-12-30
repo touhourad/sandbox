@@ -26,8 +26,8 @@ jobs:
           git remote add upstream https://github.com/${UPSTREAM_REPO}.git
           git fetch upstream --prune --prune-tags
           git merge upstream/$(git branch --show-current) --allow-unrelated-histories
-          git push
-          git push --tag
+          git push -f
+          git push --tag -f
 
       # - uses: imba-tjd/rebase-upstream-action@master
       #   with:
