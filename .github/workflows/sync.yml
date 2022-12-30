@@ -26,6 +26,17 @@ jobs:
       #     git merge upstream/$(git branch --show-current) --allow-unrelated-histories
       #     git push
       #     git push --tag
-      - uses: imba-tjd/rebase-upstream-action@master
+
+      # - uses: imba-tjd/rebase-upstream-action@master
+      #   with:
+      #     branch: $(git branch --show-current)
+
+      - name: Sync upstream changes
+        id: sync
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
         with:
-          branch: $(git branch --show-current)
+          target_sync_branch: $(git branch --show-current)
+          # REQUIRED 'target_repo_token' exactly like this!
+          target_repo_token: ${{ secrets.GITHUB_TOKEN }}
+          upstream_sync_branch: $(git branch --show-current)
+          upstream_sync_repo: touhoured/sandbox
